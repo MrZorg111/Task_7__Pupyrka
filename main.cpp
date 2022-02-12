@@ -14,7 +14,7 @@ bool pup_true(int c, int d) {
                       {true,true,true,true,true,true,true,true,true,true,true,true},
                       {true,true,true,true,true,true,true,true,true,true,true,true}};
 
-return 0;
+return pup[c][d];
 }
 char wrap(int b, int f) {
     char w[12][12] {{'o','o','o','o','o','o','o','o','o','o','o','o'},
@@ -29,17 +29,36 @@ char wrap(int b, int f) {
                     {'o','o','o','o','o','o','o','o','o','o','o','o'},
                     {'o','o','o','o','o','o','o','o','o','o','o','o'},
                     {'o','o','o','o','o','o','o','o','o','o','o','o'}};
-    w[b][f] = 'x';
+
 
     return w[b][f];
 }
+bool check (bool a[][12]) {
+    bool good = true;
+    for (int i = 0; i < 12; i++) {
+        for (int l = 0; l < 12; l++) {
+            if (a[i][l]) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 int main() {
+    char tempo [12][12];
+    bool tempo_true [12][12];
+    for (int i = 0; i < 12; i++) {
+        for (int l = 0; l < 12; l++) {
+            tempo[i][l] = wrap(i, l);
+            tempo_true[i][l] = pup_true(i, l);
+        }
+    }
    int x, y;
-   for (int e = 0; e < 144; e++){
-        for (int i = 0; i < 12; i++) {
-            for (int l = 0; l < 12; l++) {
-                std::cout << wrap(i, l) << " ";
+   for (int e = 0; check(tempo_true); e++){
+        for (int t = 0; t < 12; t++) {
+            for (int j = 0; j < 12; j++) {
+                std::cout << tempo[t][j] << " ";
             }
             std::cout << "\n";
         }
@@ -48,22 +67,25 @@ int main() {
         std::cin >> x;
         std::cout << "y: ";
         std::cin >> y;
-        if ((x < 0 || y < 0) && (x > 11 || y > 11)) {
-            std::cout << "Error!!!";
+        std::cout << std::endl;
+        if ((x < 0 || y < 0) || (x > 11 || y > 11)) {
+            std::cout << "Error!!! \n";
         }
         else {
-            pup_true(x, y);
+            if (tempo[x][y] == 'x') {
+                std::cout << "Error!!! \n";
+            }
+            else {
+                tempo[x][y] = 'x';
+                tempo_true[x][y] = false;
+            }
         }
 
-    }
+   }
+        for (int q = 0; q < 12; q++) {
+            for (int w = 0; w < 12; w++) {
+                std::cout << tempo[q][w] << " ";
+            }
+            std::cout << "\n";
+        }
 }
-
-
-/*
-  for (int i = 0; i < 12; i++) {
-        for (int l = 0; l < 12; l++) {
-        std::cout << wrap(check, i, l) << " ";
-        }
-        std::cout << "\n";
-    }
- */
